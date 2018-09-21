@@ -5,6 +5,8 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{multicol}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 \usepackage[left=1.65cm, right=1.65cm, top=1.78cm, bottom=1.78cm]{geometry}
 
 \author{Bollschweiler Vargas Ian Nicolas\\
@@ -18,24 +20,56 @@
 	\maketitle
 \begin{center}
 		\textbf{Resumen}
-	\begin{abastract}
+	\begin{abstract}
+	
+	
 	%contenido del resumen 
 	\end{abstract}
 \end{center}
 \begin{multicols}{2}
-\section{\normalsize INTRODUCCI\'ON}}
-
+\section{\normalsize INTRODUCCI\'ON}
+\qquad Introducción de prueba
 \section{{\normalsize ESTADO DEL ARTE}}
 \begin{itemize}
-\item \textbf{Shell Sort :} es principalmente una variación de Insertion Sort .En la ordenación por inserción, movemos los elementos solo una posición más adelante. Cuando un elemento tiene que moverse mucho más adelante, muchos movimientos están involucrados.
-Durante la ejecuci\'on de este algoritmo, los n\'umeros de la lista se van casi-ordenando y finalmente, el \'ultimo paso o funci\'on de este algoritmo es un simple metodo por inserci\'on que, al estar casi-ordenados los n\'umeros, es más eficiente.
-\item \textbf{Merge Sort:} el algoritmo de Ordenamiento por mezcla (Merge sort en inglés) es un algoritmo de ordenación externo estable basado en la técnica divide y vencerás. Es de complejidad O($n \log n$).Fue desarrollado en 1945 por John Von Neumann.
+\item \textbf{Shell Sort :} Es principalmente una variación de Insertion Sort. En la ordenación por inserción, movemos los elementos solo una posición más adelante. Cuando un elemento tiene que moverse mucho más adelante, muchos movimientos están involucrados.
+Durante la ejecuci\'on de este algoritmo, los n\'umeros de la lista se van casi-ordenando y finalmente, el \'ultimo paso o funci\'on de este algoritmo es un simple m\'etodo por inserci\'on que, al estar casi-ordenados los n\'umeros, es más eficiente.
+\item \textbf{Merge Sort:} El algoritmo de Ordenamiento por mezcla (Merge sort en inglés) es un algoritmo de ordenación externo estable basado en la técnica divide y vencerás. Es de complejidad O($n \log n$).Fue desarrollado en 1945 por John Von Neumann.
 A grandes rasgos, el algoritmo consiste en dividir en dos partes iguales el vector a ordenar, ordenar por separado cada una de las partes, y luego mezclar ambas partes, manteniendo el orden, en un solo vector ordenado.
-\item\textbf{Quick Sort:} el ordenamiento rápido (quick sort en inglés) es un algoritmo basado en la técnica de divide y vencerás, que permite, en promedio, ordenar n elementos en un tiempo proporcional a O($n \log n$). Esta es la técnica de ordenamiento más rápida conocida. Fue desarrollada por C. Antony R. Hoare en 1960. El algoritmo original es recursivo, pero se utilizan versiones iterativas para mejorar su rendimiento .
+\item\textbf{Quick Sort:} El ordenamiento rápido (quick sort en inglés) es un algoritmo basado en la técnica de divide y vencerás, que permite, en promedio, ordenar n elementos en un tiempo proporcional a O($n \log n$). Esta es la técnica de ordenamiento más rápida conocida. Fue desarrollada por C. Antony R. Hoare en 1960. El algoritmo original es recursivo, pero se utilizan versiones iterativas para mejorar su rendimiento .
+
 
 
 \end{itemize}
 \section{{\normalsize DISEÑO DEL EXPERIMENTO}}
+Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordenamiento, siendo estos: Merge sort, Bubble sort, Quick sort, Insertion sort y Bucket sort. Estos serán implementados en lenguaje R donde ordenarán un arreglo de números aleatorios de n elementos. Este proceso se realizará 100 veces y se tomará la media de los tiempos de ejecución de cada algoritmo para aproximar el tiempo de valor medio para esa cantidad de elementos. Después, se procederá a variar dicha cantidad para evaluar el crecimiento de la función tiempo de ejecución. Finalmente, se realizará un ajuste para encontrar la función que mejor describa el comportamiento de cada algoritmo para n elementos. Los pseudocódigos de los algoritmos a utilizar son:
+\begin{algorithm}
+	\caption{Bubble Sort}
+	\label{Bubble}
+	\begin{algorithmic}[1]
+		\Procedure
+		Do something
+		\EndProcedure
+	\end{algorithmic}	
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{multicols}
 \end{document}
