@@ -5,8 +5,9 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{multicol}
-\usepackage{algpseudocode}
-\usepackage{algorithm}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage[boxruled, linesnumbered]{algorithm2e}
 \usepackage[left=1.65cm, right=1.65cm, top=1.78cm, bottom=1.78cm]{geometry}
 
 \author{Bollschweiler Vargas Ian Nicolas\\
@@ -35,21 +36,103 @@
 Durante la ejecuci\'on de este algoritmo, los n\'umeros de la lista se van casi-ordenando y finalmente, el \'ultimo paso o funci\'on de este algoritmo es un simple m\'etodo por inserci\'on que, al estar casi-ordenados los n\'umeros, es más eficiente.
 \item \textbf{Merge Sort:} El algoritmo de Ordenamiento por mezcla (Merge sort en inglés) es un algoritmo de ordenación externo estable basado en la técnica divide y vencerás. Es de complejidad O($n \log n$).Fue desarrollado en 1945 por John Von Neumann.
 A grandes rasgos, el algoritmo consiste en dividir en dos partes iguales el vector a ordenar, ordenar por separado cada una de las partes, y luego mezclar ambas partes, manteniendo el orden, en un solo vector ordenado.
-\item\textbf{Quick Sort:} El ordenamiento rápido (quick sort en inglés) es un algoritmo basado en la técnica de divide y vencerás, que permite, en promedio, ordenar n elementos en un tiempo proporcional a O($n \log n$). Esta es la técnica de ordenamiento más rápida conocida. Fue desarrollada por C. Antony R. Hoare en 1960. El algoritmo original es recursivo, pero se utilizan versiones iterativas para mejorar su rendimiento .
-
-
+\item\textbf{Quick Sort:} El ordenamiento rápido (quick sort en inglés) es un algoritmo basado en la técnica de divide y vencerás, que permite, en promedio, ordenar n elementos en un tiempo proporcional a O($n \log n$). Esta es la técnica de ordenamiento más rápida conocida. Fue desarrollada por C. Antony R. Hoare en 1960. El algoritmo original es recursivo, pero se utilizan versiones iterativas para mejorar su rendimiento.
 
 \end{itemize}
 \section{{\normalsize DISEÑO DEL EXPERIMENTO}}
-Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordenamiento, siendo estos: Merge sort, Bubble sort, Quick sort, Insertion sort y Bucket sort. Estos serán implementados en lenguaje R donde ordenarán un arreglo de números aleatorios de n elementos. Este proceso se realizará 100 veces y se tomará la media de los tiempos de ejecución de cada algoritmo para aproximar el tiempo de valor medio para esa cantidad de elementos. Después, se procederá a variar dicha cantidad para evaluar el crecimiento de la función tiempo de ejecución. Finalmente, se realizará un ajuste para encontrar la función que mejor describa el comportamiento de cada algoritmo para n elementos. Los pseudocódigos de los algoritmos a utilizar son:
-\begin{algorithm}
-	\caption{Bubble Sort}
-	\label{Bubble}
-	\begin{algorithmic}[1]
-		\Procedure
-		Do something
-		\EndProcedure
-	\end{algorithmic}	
+Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordenamiento, siendo estos: Merge sort, Bubble sort, Quick sort, Insertion sort y Bucket sort. Estos serán implementados en lenguaje R donde ordenarán un arreglo de números aleatorios de n elementos. Este proceso se realizará 100 veces y se tomará la media de los tiempos de ejecución de cada algoritmo para aproximar el tiempo de valor medio para esa cantidad de elementos. Después, se procederá a variar dicha cantidad para evaluar el crecimiento de la función tiempo de ejecución. Finalmente, se realizará un ajuste para encontrar la función que mejor describa el comportamiento de cada algoritmo para n elementos.\newline Los pseudocódigos de los algoritmos a utilizar son:
+
+
+\begin{algorithm}[H]	
+	\SetKwData{A}{A}
+    \SetKwFunction{Merge-Sort}{Merge-Sort}\SetKwFunction{Merge}{Merge}
+    \SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
+    \Input{Array A,p,r}
+    \Output{Array A ordenado}
+    \BlankLine
+    \If(){p $<$ r}{
+        \emph{ q = $\floor*{\frac{(p+r)}{2}}$}\;
+        \Merge-Sort{ A,p,q}\;
+        \Merge-Sort{ A,q+1,r}\;
+        \Merge{A,p,q,r}\;
+    }
+    	\caption{Merge Sort}
+\end{algorithm}
+
+
+\begin{algorithm}[H]	
+	\SetKwData{A}{A}
+    \SetKwFunction{Merge-Sort}{Merge-Sort}\SetKwFunction{Merge}{Merge}
+    \SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
+    \Input{Array A con n elementos}
+    \Output{Array A ordenado}
+    \BlankLine
+    \For{$i\leftarrow 1$ \KwTo $n$}{
+		\For{$j\leftarrow 1$ \KwTo $n$}{        
+        	\If(){A[j] $>$ A[j+1]}{
+        		\emph{Intercambiar A[j] y A[j+1]}\;
+			}        
+        }
+    }
+    	\caption{Bubble Sort}
+\end{algorithm}
+
+\begin{algorithm}[H]	
+	\SetKwData{A}{A}
+    \SetKwFunction{Merge-Sort}{Merge-Sort}\SetKwFunction{Merge}{Merge}
+    \SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
+    \Input{Array A,p,r}
+    \Output{Array A ordenado}
+    \BlankLine
+    \If(){p $<$ r}{
+        \emph{ q = $\floor*{\frac{(p+r)}{2}}$}\;
+        \Merge-Sort{ A,p,q}\;
+        \Merge-Sort{ A,q+1,r}\;
+        \Merge{A,p,q,r}\;
+    }
+    	\caption{Quick Sort}
+\end{algorithm}
+
+\begin{algorithm}[H]	
+	
+	\SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
+    \Input{Array A con n elementos}
+    \Output{Array A ordenado}
+    \For{$j\leftarrow 2$ \KwTo n}{
+		\emph{llave $=$ $A[j]$}\;
+		\emph{$i = j-1$}\;
+		\While(){i$>$0 y $A[i] > llave$}{
+			\emph{$A[i+1] = A[i]$}\;
+			\emph{$i = i-1$}\;
+		}
+		\emph{$A[i+1] = llave$}\;	
+	}
+    	\caption{Insertion Sort}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}						\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	\Input{A bitmap $Im$ of size $w\times l$}
+	\Output{A partition of the bitmap}
+	\BlankLine
+	\emph{special treatment of the first line}\;
+	\For{$i\leftarrow 2$ \KwTo $l$}{
+		\emph{special treatment of the first element of line $i$}\;
+		\For{$j\leftarrow 2$ \KwTo $w$}{\label{forins}
+			\Left$\leftarrow$ \FindCompress{$Im[i,j-1]$}\;
+			\Up$\leftarrow$ \FindCompress{$Im[i-1,]$}\;
+			\This$\leftarrow$ \FindCompress{$Im[i,j]$}\;
+			\If(\tcp*[h]{O(\Left,\This)==1}){\Left compatible with \This}{\label{lt}						\lIf{\Left $<$ \This}{\Union{\Left,\This}}
+				\lElse{\Union{\This,\Left}}
+			}
+			\If(\tcp*[f]{O(\Up,\This)==1}){\Up compatible with \This}{\label{ut}
+				\lIf{\Up $<$ \This}{\Union{\Up,\This}}
+				\tcp{\This is put under \Up to keep tree as flat as possible}\label{cmt}					\lElse{\Union{\This,\Up}}\tcp*[h]{\This linked to \Up}\label{lelse}}
+				}
+			\lForEach{element $e$ of the line $i$}{\FindCompress{p}}
+		}
+		\caption{Bucket Sort}
 \end{algorithm}
 
 
@@ -57,19 +140,19 @@ Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordena
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{multicols}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
