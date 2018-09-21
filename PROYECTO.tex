@@ -5,8 +5,10 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{multicol}
+%Ignoren estas 2 lineas, son solo para definir la funcion piso para el pseudocodigo
 \usepackage{mathtools}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
 \usepackage[boxruled, linesnumbered]{algorithm2e}
 \usepackage[left=1.65cm, right=1.65cm, top=1.78cm, bottom=1.78cm]{geometry}
 
@@ -29,7 +31,7 @@
 \end{center}
 \begin{multicols}{2}
 \section{\normalsize INTRODUCCI\'ON}
-\qquad Introducción de prueba
+
 \section{{\normalsize ESTADO DEL ARTE}}
 \begin{itemize}
 \item \textbf{Shell Sort :} Es principalmente una variación de Insertion Sort. En la ordenación por inserción, movemos los elementos solo una posición más adelante. Cuando un elemento tiene que moverse mucho más adelante, muchos movimientos están involucrados.
@@ -39,38 +41,39 @@ A grandes rasgos, el algoritmo consiste en dividir en dos partes iguales el vect
 \item\textbf{Quick Sort:} El ordenamiento rápido (quick sort en inglés) es un algoritmo basado en la técnica de divide y vencerás, que permite, en promedio, ordenar n elementos en un tiempo proporcional a O($n \log n$). Esta es la técnica de ordenamiento más rápida conocida. Fue desarrollada por C. Antony R. Hoare en 1960. El algoritmo original es recursivo, pero se utilizan versiones iterativas para mejorar su rendimiento.
 
 \end{itemize}
+
 \section{{\normalsize DISEÑO DEL EXPERIMENTO}}
 Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordenamiento, siendo estos: Merge sort, Bubble sort, Quick sort, Insertion sort y Bucket sort. Estos serán implementados en lenguaje R donde ordenarán un arreglo de números aleatorios de n elementos. Este proceso se realizará 100 veces y se tomará la media de los tiempos de ejecución de cada algoritmo para aproximar el tiempo de valor medio para esa cantidad de elementos. Después, se procederá a variar dicha cantidad para evaluar el crecimiento de la función tiempo de ejecución. Finalmente, se realizará un ajuste para encontrar la función que mejor describa el comportamiento de cada algoritmo para n elementos.\newline Los pseudocódigos de los algoritmos a utilizar son:
 
 
 \begin{algorithm}[H]	
 	\SetKwData{A}{A}
-    \SetKwFunction{Merge-Sort}{Merge-Sort}\SetKwFunction{Merge}{Merge}
+    \SetKwFunction{MergeSort}{MergeSort}\SetKwFunction{Merge}{Merge}
     \SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
     \Input{Array A,p,r}
     \Output{Array A ordenado}
     \BlankLine
     \If(){p $<$ r}{
         \emph{ q = $\floor*{\frac{(p+r)}{2}}$}\;
-        \Merge-Sort{ A,p,q}\;
-        \Merge-Sort{ A,q+1,r}\;
+        \MergeSort{A,p,q}\;
+        \MergeSort{A,q+1,r}\;
         \Merge{A,p,q,r}\;
+        \tcp*[h]{Merge junta los arreglos A[p..q] y A[q+1..r] que se encuentran ordenados}
     }
     	\caption{Merge Sort}
 \end{algorithm}
 
 
 \begin{algorithm}[H]	
-	\SetKwData{A}{A}
-    \SetKwFunction{Merge-Sort}{Merge-Sort}\SetKwFunction{Merge}{Merge}
     \SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
+    \SetKwFunction{Intercambiar}{Intercambiar}
     \Input{Array A con n elementos}
     \Output{Array A ordenado}
     \BlankLine
     \For{$i\leftarrow 1$ \KwTo $n$}{
 		\For{$j\leftarrow 1$ \KwTo $n$}{        
         	\If(){A[j] $>$ A[j+1]}{
-        		\emph{Intercambiar A[j] y A[j+1]}\;
+        		\emph{\Intercambiar{A[j], A[j+1]}}\;
 			}        
         }
     }
@@ -78,19 +81,21 @@ Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordena
 \end{algorithm}
 
 \begin{algorithm}[H]	
-	\SetKwData{A}{A}
-    \SetKwFunction{Merge-Sort}{Merge-Sort}\SetKwFunction{Merge}{Merge}
+	\SetKwFunction{Particion}{Partici\'on}
+	\SetKwFunction{QuickSort}{QuickSort}
     \SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
     \Input{Array A,p,r}
     \Output{Array A ordenado}
     \BlankLine
-    \If(){p $<$ r}{
-        \emph{ q = $\floor*{\frac{(p+r)}{2}}$}\;
-        \Merge-Sort{ A,p,q}\;
-        \Merge-Sort{ A,q+1,r}\;
-        \Merge{A,p,q,r}\;
-    }
-    	\caption{Quick Sort}
+    \If(){p$<$r}{
+    	\emph{q $=$ \Particion{A,p,r}}\;
+    	\tcp*[h]{La función partición reordena el arreglo A[p..r]}
+    	\emph{\QuickSort{A,p,q-1}}\;
+    	\emph{\QuickSort{A,q+1,r}}\;    
+    }    
+    
+    
+   	\caption{Quick Sort}
 \end{algorithm}
 
 \begin{algorithm}[H]	
@@ -110,49 +115,28 @@ Para evaluar el tiempo de valor esperado, implementaremos 5 algoritmos de ordena
     	\caption{Insertion Sort}
 \end{algorithm}
 
-\begin{algorithm}[H]
-	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
-	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}						\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-	\Input{A bitmap $Im$ of size $w\times l$}
-	\Output{A partition of the bitmap}
-	\BlankLine
-	\emph{special treatment of the first line}\;
-	\For{$i\leftarrow 2$ \KwTo $l$}{
-		\emph{special treatment of the first element of line $i$}\;
-		\For{$j\leftarrow 2$ \KwTo $w$}{\label{forins}
-			\Left$\leftarrow$ \FindCompress{$Im[i,j-1]$}\;
-			\Up$\leftarrow$ \FindCompress{$Im[i-1,]$}\;
-			\This$\leftarrow$ \FindCompress{$Im[i,j]$}\;
-			\If(\tcp*[h]{O(\Left,\This)==1}){\Left compatible with \This}{\label{lt}						\lIf{\Left $<$ \This}{\Union{\Left,\This}}
-				\lElse{\Union{\This,\Left}}
-			}
-			\If(\tcp*[f]{O(\Up,\This)==1}){\Up compatible with \This}{\label{ut}
-				\lIf{\Up $<$ \This}{\Union{\Up,\This}}
-				\tcp{\This is put under \Up to keep tree as flat as possible}\label{cmt}					\lElse{\Union{\This,\Up}}\tcp*[h]{\This linked to \Up}\label{lelse}}
-				}
-			\lForEach{element $e$ of the line $i$}{\FindCompress{p}}
-		}
-		\caption{Bucket Sort}
+\begin{algorithm}[H]	
+	
+	\SetKwInOut{Input}{Entrada}\SetKwInOut{Output}{Salida}
+    \Input{Array A con n elementos}
+    \Output{Array A ordenado}
+    \BlankLine
+    \emph{Sea $B[0..n-1]$ un nuevo array}\;
+    \For{$j\leftarrow 0$ \KwTo $n-1$}{
+    	\emph{Hacer B[i] una lista vacia}\;
+    }
+    \For{$i\leftarrow 1$ \KwTo $n$}{
+		\emph{Insertar $A[i]$ en la lista $B[\floor*{nA[i]}]$}\;    
+    }
+    \For{$i\leftarrow 0$ \KwTo $n-1$}{
+		\emph{Ordenar la lista $B[i]$ usando el Insertion Sort}\;    
+    }
+	\emph{Concatenar las listas $B[0],B[1]...B[n-1]$ en orden}\;       
+    \caption{Bucket Sort}
 \end{algorithm}
 
 
 
 
-
-
 \end{multicols}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{document}
