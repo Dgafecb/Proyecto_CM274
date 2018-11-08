@@ -1,0 +1,33 @@
+Algoritmos para calcular la esperanza:
+
+1	Bubble sort
+	
+	E(n) ~ ( tp(n) + to(n) ) / 2
+	
+	donde:
+	
+	n		es el numero de elementos del array,
+	tp(n)	es el peor tiempo (array en orden descendiente)
+	to(n)	es el mejor tiempo (array en orden ascendente)
+	
+	la aproximacion se vuelve igualdad cuando n y n-1 NO son
+	multiplos de 4, en otro caso E es ligeramente menor.
+	
+	La recomendacion seria usar 99 elementos en lugar de 100
+	para una mejor aproximacion, midiendo tp y to varias veces
+	para mayor exactitud y promediar ambos valores para tener
+	un tp y to medios, luego reemplazar arriba.
+	
+2	Insertion sort
+	
+	E(n) = ( tp(n) + to(n) ) / 2
+	
+	la leyenda es igual al bubble sort, se resuelve de igual
+	manera, aunque aqui si se puede usar 100 elementos.
+	
+3	Merge sort
+	
+	El tiempo de ejecucion no depende del ordenamiento de
+	los numeros, es decir E(n) = k para cierto valor de n.
+	En este caso, para hallar E simplemente se debe calcular
+	el promedio de varios casos aleatorios del mismo tamaño.
