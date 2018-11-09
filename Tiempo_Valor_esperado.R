@@ -143,31 +143,40 @@ bucketsort = function(data){					# Se crea una lista de 10 canastas o buckets
 #Para el peor caso generamos un array de 99 elementos ordenado de forma descendente
 #Una vez generado el array de forma descendente
 # Mediremos el tiempo de ordenamiento con el Bubble Sort para obtener el peor tiempo de ejecucion
+# Realizaremos el test para N = {10,25,50,99}
+N <- c(10,25,50,75,99)
+k <- 1
+expected_time_bubble <- vector()
 test_times <- vector() #Este vector almacena el array de tiempos de ejecucion de cada test
-for(i in 1:1000){
-    test_1 <- sample(1:100,99)
-    sort(test_1,decreasing = TRUE)
-    t_inicio <- Sys.time()
-    test_1 <- bubble_sort(test_1)
-    t_final <- Sys.time()
-    test_times[i] <- t_final-t_inicio
+for(j in N){
+    for(i in 1:1000){
+        test_1 <- sample(1:100,j)
+        sort(test_1,decreasing = TRUE)
+        t_inicio <- Sys.time()
+        test_1 <- bubble_sort(test_1)
+        t_final <- Sys.time()
+        test_times[i] <- t_final-t_inicio
+    }
+    worst_time_bubble<- mean(test_times)
+    #Ahora generamos un array para el mejor caso, que seria un array ordenado
+    for(i in 1:1000){
+        test_2 <- sample(1:100,j)
+        sort(test_2)
+        t_inicio <- Sys.time()
+        test_2 <- bubble_sort(test_2)
+        t_final <- Sys.time()
+        test_times[i] <- t_final-t_inicio
+    }
+    best_time_bubble <- mean(test_times)
+    
+    #Ahora con los valores promedio de cada uno de sus peores casos, procedemos a reemplazar la ecuacion (1)
+    #Para hallar la esperanza para n = 99
+    expected_time_bubble[k] <- (best_time_bubble + worst_time_bubble)/2
+    cat("La esperanza para el Bubble Sort para un array de ",j," elementos es E(",j,") = ",expected_time_bubble[k],"\n")
+    #sprintf("La esperanza para el Bubble sort para un array de %f elementos es E(%f) = %f", j,j,expected_time_bubble[k])
+    
+    k <- k + 1
 }
-worst_time_bubble<- mean(test_times)
-#Ahora generamos un array para el mejor caso, que seria un array ordenado
-for(i in 1:1000){
-    test_2 <- sample(1:100,99)
-    sort(test_2)
-    t_inicio <- Sys.time()
-    test_2 <- bubble_sort(test_2)
-    t_final <- Sys.time()
-    test_times[i] <- t_final-t_inicio
-}
-best_time_bubble <- mean(test_times)
-#Ahora con los valores promedio de cada uno de sus peores casos, procedemos a reemplazar la ecuacion (1)
-#Para hallar la esperanza para n = 99
-expected_time_bubble <- (best_time_bubble + worst_time_bubble)/2
-sprintf("La esperanza para el Bubble sort para un array de 99 elementos es E(99) = %f", expected_time_bubble)
-
 #Test para el Insertion Sort
 # 2) Insertion sort
 # 
@@ -175,30 +184,35 @@ sprintf("La esperanza para el Bubble sort para un array de 99 elementos es E(99)
 # 
 # la leyenda es igual al bubble sort, se resuelve de igual
 # manera, aunque aqui si se puede usar 100 elementos.
-for(i in 1:1000){
-    test_3 <- sample(1:100,100)
-    sort(test_3,decreasing = TRUE)
-    t_inicio <- Sys.time()
-    test_3 <- insertion_sort(test_3)
-    t_final <- Sys.time()
-    test_times[i] <- t_final-t_inicio
+k<- 1
+N<-c(10,25,50,75,100)
+expected_time_insert<- vector()
+for(j in N){
+    for(i in 1:1000){
+        test_3 <- sample(1:100,j)
+        sort(test_3,decreasing = TRUE)
+        t_inicio <- Sys.time()
+        test_3 <- insertion_sort(test_3)
+        t_final <- Sys.time()
+        test_times[i] <- t_final-t_inicio
+    }
+    worst_time_insert <- mean(test_times)
+    #Ahora generamos un array para el mejor caso, que seria un array ordenado
+    for(i in 1:1000){
+        test_4 <- sample(1:100,j)
+        sort(test_4)
+        t_inicio <- Sys.time()
+        test_4 <- insertion_sort(test_4)
+        t_final <- Sys.time()
+        test_times[i] <- t_final-t_inicio
+    }
+    best_time_insert <- mean(test_times)
+    #Ahora con los valores promedio de cada uno de sus peores casos, procedemos a reemplazar la ecuacion (1)
+    #Para hallar la esperanza para n = 99
+    expected_time_insert[k] <- (best_time_insert + worst_time_insert)/2
+    cat("La esperanza para el Insertion Sort para un array de ",j," elementos es E(",j,") = ",expected_time_insert[k],"\n")
+    k<- k+1
 }
-worst_time_insert <- mean(t)
-#Ahora generamos un array para el mejor caso, que seria un array ordenado
-for(i in 1:1000){
-    test_4 <- sample(1:100,100)
-    sort(test_4)
-    t_inicio <- Sys.time()
-    test_4 <- insertion_sort(test_4)
-    t_final <- Sys.time()
-    test_times[i] <- t_final-t_inicio
-}
-best_time_insert <- mean(test_times)
-#Ahora con los valores promedio de cada uno de sus peores casos, procedemos a reemplazar la ecuacion (1)
-#Para hallar la esperanza para n = 99
-expected_time_insert <- (best_time_insert + worst_time_insert)/2
-sprintf("La esperanza para el Insertion sort para un array de 100 elementos es E(100) = %f", expected_time_insert)
-
 #Test para el Merge Sort
 # 3) Merge sort
 # 
@@ -206,16 +220,20 @@ sprintf("La esperanza para el Insertion sort para un array de 100 elementos es E
 # los numeros, es decir E(n) = k para cierto valor de n.
 # En este caso, para hallar E simplemente se debe calcular
 # el promedio de varios casos aleatorios del mismo tamaño.
-for(i in 1:10000){
-    test_5 <- sample(1:100,100)
-    t_inicio <- Sys.time()
-    test_5 <- merge_sort(test_5)
-    t_final <- Sys.time()
-    test_times[i] <- t_final - t_inicio
+k<-1
+expected_time_merge <- vector()
+for(j in N){
+    for(i in 1:10000){
+        test_5 <- sample(1:100,j)
+        t_inicio <- Sys.time()
+        test_5 <- merge_sort(test_5)
+        t_final <- Sys.time()
+        test_times[i] <- t_final - t_inicio
+    }
+    expected_time_merge[k] <- mean(test_times)
+    cat("La esperanza para el Merge Sort para un array de ",j," elementos es E(",j,") = ",expected_time_merge[k],"\n")
+    k<- k+1
 }
-expected_time_merge <- mean(test_times)
-sprintf("La esperanza para el Merge Sort para un array de 100 elementos es E(100) = %f", expected_time_merge)
-
 # Test para el Quick Sort
 #
 # El algoritmo Quicksort usa un método llamado de “pivote” donde él ultimo termino generalmente se usa como pivote, 
@@ -227,16 +245,20 @@ sprintf("La esperanza para el Merge Sort para un array de 100 elementos es E(100
 # Se observará que el mejor tiempo se dará cuando el “pivote” sea la mediana de los términos ordenados. Y que el peor de los
 # casos, será cuando este ocupe la primera o ultima posición de los términos ordenados
 test_times1 <- vector()
-for(i in 1:10000){
-    test_6 <- sample(1:100,100)
-    t_inicio <- Sys.time()
-    quicksort(test_6)
-    t_final <- Sys.time()
-    test_times1[i] <- t_final - t_inicio
+k<-1
+expected_time_quick <- vector()
+for(j in N){
+    for(i in 1:10000){
+        test_6 <- sample(1:100,j)
+        t_inicio <- Sys.time()
+        quicksort(test_6)
+        t_final <- Sys.time()
+        test_times1[i] <- t_final - t_inicio
+    }
+    expected_time_quick[k] <- mean(test_times1)
+    cat("La esperanza para el Quick Sort para un array de ",j," elementos es E(",j,") = ",expected_time_quick[k],"\n")
+    k<- k+1
 }
-expected_time_quick <- mean(test_times1)
-sprintf("La esperanza para el Quick Sort para un array de 100 elementos es E(100) = %f", expected_time_quick)
-
 # Test para el Bucket Sort
 #
 # El algoritmo de Bucketsort es una “variante” del algoritmo de Quicksort ya explicado antes, lo que se hace es dividir los datos
@@ -247,16 +269,45 @@ sprintf("La esperanza para el Quick Sort para un array de 100 elementos es E(100
 # Finalmente diremos que el Bucketsord adquiere su máxima efectividad cuando las cubetas está distribuidas de manera igual o muy parecida,
 # o sea cuando cada cubeta tiene (casi) el mismo numero de elementos
 test_times2 <- vector()
-for(i in 1:10000){
-    test_7 <- sample(1:100,100)
-    t_inicio <- Sys.time()
-    bucketsort(test_7)
-    t_final <- Sys.time()
-    test_times2[i] <- t_final - t_inicio
+k<-1
+expected_time_bucket <- vector()
+for(j in N){
+    for(i in 1:10000){
+        test_7 <- sample(1:100,j)
+        t_inicio <- Sys.time()
+        bucketsort(test_7)
+        t_final <- Sys.time()
+        test_times2[i] <- t_final - t_inicio
+    }
+    expected_time_bucket[k] <- mean(test_times2)
+    cat("La esperanza para el Bucket Sort para un array de ",j," elementos es E(",j,") = ",expected_time_bucket[k],"\n")
+    k<- k+1
 }
-expected_time_bucket <- mean(test_times2)
-sprintf("La esperanza para el Bucket Sort para un array de 100 elementos es E(100) = %f", expected_time_bucket)
 
+# Ahora graficaremos la esperanza para cada N, usando los valores obtenidos
+g_range <- range(0, max(expected_time_bubble,expected_time_bucket,expected_time_insert,expected_time_insert,expected_time_merge,expected_time_quick))
+
+plot(expected_time_bubble, type="o", col="blue", ylim=g_range, 
+     axes=FALSE, ann=FALSE)
+#eje X
+axis(1, at=1:5, lab=c("10","25","50","75","100"))
+#eje Y
+axis(2,  las=1, at=0.00005*0:g_range)
+box()
+#Lineas para cada algoritmo
+lines(expected_time_insert, type="o", pch=22, lty=2, col="red")
+lines(expected_time_merge, type="o", pch=22, lty=2, col="green")
+lines(expected_time_quick, type="o", pch=22, lty=2, col="purple")
+lines(expected_time_bucket, type="o", pch=22, lty=2, col="1")
+#Titulo
+title(main="Tiempo de valor esperado", col.main="red", font.main=4)
+#Eje x
+title(xlab="Cantidad de elementos", col.lab=rgb(0,0.5,0))
+#Eje Y
+title(ylab="Tiempo de ejecucion", col.lab=rgb(0,0.5,0))
+#Leyenda
+legend(1, g_range[2], c("Bubble Sort","Insertion Sort","Merge Sort","Quick Sort","Bucket Sort"), cex=0.8, 
+       col=c("blue","red","green","purple","1"), pch=21:22, lty=1:2)
 
 
 
