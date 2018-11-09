@@ -152,7 +152,7 @@ for(i in 1:1000){
     t_final <- Sys.time()
     test_times[i] <- t_final-t_inicio
 }
-
+worst_time_bubble<- mean(test_times)
 #Ahora generamos un array para el mejor caso, que seria un array ordenado
 for(i in 1:1000){
     test_2 <- sample(1:100,99)
@@ -162,7 +162,7 @@ for(i in 1:1000){
     t_final <- Sys.time()
     test_times[i] <- t_final-t_inicio
 }
-
+best_time_bubble <- mean(test_times)
 #Ahora con los valores promedio de cada uno de sus peores casos, procedemos a reemplazar la ecuacion (1)
 #Para hallar la esperanza para n = 99
 expected_time_bubble <- (best_time_bubble + worst_time_bubble)/2
@@ -183,7 +183,7 @@ for(i in 1:1000){
     t_final <- Sys.time()
     test_times[i] <- t_final-t_inicio
 }
-
+worst_time_insert <- mean(t)
 #Ahora generamos un array para el mejor caso, que seria un array ordenado
 for(i in 1:1000){
     test_4 <- sample(1:100,100)
@@ -193,7 +193,7 @@ for(i in 1:1000){
     t_final <- Sys.time()
     test_times[i] <- t_final-t_inicio
 }
-
+best_time_insert <- mean(test_times)
 #Ahora con los valores promedio de cada uno de sus peores casos, procedemos a reemplazar la ecuacion (1)
 #Para hallar la esperanza para n = 99
 expected_time_insert <- (best_time_insert + worst_time_insert)/2
