@@ -30,13 +30,13 @@ En este informe plantearemos la eficiencia de algunos algoritmos de ordenamiento
 \section{\normalsize INTRODUCCI\'ON}
 Los algoritmos de ordenamiento, como bien indica su nombre, nos permiten ordenar, es decir
 darle a cada objeto(o dato) una posición determinada según cierto criterio específico.\\
-En este caso, nos enfocaremos en ordenar un conjunto datos, datos como:  Vectores o matrices.\\
-En este informe nos efocaremos en el estudio de algunos de los algoritmos de ordenamiento más utilizados, analizando la
+En este caso, nos enfocaremos en ordenar un conjunto de datos, datos como:  Vectores o matrices.\\
+En este informe nos enfocaremos en el estudio de algunos de los algoritmos de ordenamiento más utilizados, analizando la
 cantidad de comparaciones que se dan, el tiempo que toma cada comparación y la extensión de su código, para cada algoritmo analizado.\\
 Este informe nos permitirá conocer y comprender más a fondo cada uno de los métodos  
 de ordenamiento analizados, desde los más simples hasta los más complejos. Se realizaran comparaciones
 en tiempo de ejecucion, pre-requisitos de cada algoritmo, funcionalidad, alcance, entre otros.
-Gracias a los conocimientos obtenidos en clase se determinará una eficiencia (porcentual) de cada algoritmo,
+Gracias a los conocimientos obtenidos en clase se determinará la esperanza de cada algoritmo,
 se hará uso de criterios como la media y la mediana para este objetivo.
 a su vez, daremos una vista gráfica de los resultados obtenidos usando lenguaje R para graficar los tiempos y otros datos obtenidos de los algoritmos de ordenamineto.
 \section{{\normalsize ESTADO DEL ARTE}}
@@ -137,8 +137,31 @@ Para encontrar el tiempo de valor esperado, implementaremos 5 algoritmos de orde
     }
 	\emph{Concatenar las listas $B[0],B[1]...B[n-1]$ en orden}\;       
     \caption{Bucket Sort}
-\end{algorithm}
+\end{algorithm} 
 
+\section{{\normalsize EXPERIMENTOS Y RESULTADOS }}
+Se realizó el ordenamiento para 10,25,50,75 y 100 elementos, obteniendo los siguientes tiempos de valor esperado:\\
+\begin{minipage}[c]{7cm}
+	\includegraphics[scale=0.5]{tabladatos.png}
+\end{minipage} 
+\\
+Luego con los datos obtenidos de la tabla, generamos la siguiente gráfica:
+\\
+\begin{minipage}[c]{7cm}
+	\includegraphics[scale=0.41]{grafica_1.png}
+\end{minipage}
+
+\section{{\normalsize DISCUSI\'ON}}
+Podemos observar que el algoritmo más rápido es un empate entre el Quick Sort y el Bucket Sort, seguidos del Insertion Sort, el Merge Sort y finalmente el Bubble Sort. Notamos que el crecimiento del Insertion Sort es mayor que el del Merge Sort por lo que para una mayor cantidad de datos el Merge Sort sería más eficiente que el Insertion Sort.
+
+\section{{\normalsize CONCLUSIONES}}
+Se obtuvo los valores esperados de los algoritmos de ordenamiento más conocidos, también hemos podido analizar la eficiencia de cada uno de ellos concluyendo que los mejores algoritmos serían Quick Sort y el Bucket Sort.
+
+
+\section{{\normalsize BIBLIOGRAF\'IA O REFERENCIAS}}
+$https://www.bowdoin.edu/~Itoma/teaching/cs231/$  $duke_cps130/Lectures/L06.pdf$\\
+$https://www.ijcsmc.com/docs/papers/January2015$ $/V4I1201557.pdf$\\
+$https://pdfs.semanticscholar.org/186b/18407989$ $d49e8e88fc2f7b46c7a2a376afd1.pdf$
 
 
 
